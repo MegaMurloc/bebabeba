@@ -1,4 +1,6 @@
 #include <iostream>
+#include <frsteam>
+#include <sstream>
 #include <vector>
 #define SIZE 10
 using namespace std;
@@ -117,11 +119,35 @@ bool isComplete(vector<vector<Tile>> r, vector<vector<int>> hintsH, vector<vecto
 int main()
 {
 	int width, height;
+	ifstream file("filenme.txt"); //filenme - name of the text file
+	if (!file){
+		cout << "Файл не було відкрито";
+		exit(-1);
+	}
+	string str;
+	file >> width >> height;
 	vector<vector<Tile>> r(5, vector<Tile>(5));
-	vector<vector<int>> hintsH(5, vector<int>(SIZE));
-	vector<vector<int>> hintsV(5, vector<int>(SIZE));
+	vector<vector<int>> hintsH(height, vector<int>());
+	vector<vector<int>> hintsV(width, vector<int>());
+	getline(file, str);	
+	for ( int i = 0; i < height; i++) {
+		getline(file, str);
+		istringstream ss(str);
+		int num;
+		while(ss >> num) {
+			hintsH[i].push_back (num);
+		}		
+	}
+	for ( int i = 0; i < width; i++) {
+		getline(file, str);
+		istringstream ss(str);
+		int num;
+		while(ss >> num) {
+			hintsV[i].push_back (num);
+		}		
+	}
 
-	width = 5, height = 5;
+
 	for (int i = 0; i < width; i++)
 	{
 		for (int j = 0; j < height; j++)
